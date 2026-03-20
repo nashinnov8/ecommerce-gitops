@@ -1,0 +1,24 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: ecommerce-repo
+  namespace: flux-system
+spec:
+  interval: 1m # 1 check GitHub every 1 minute
+  url: https://github.com/nashinnov8/ecommerce-gitops
+  ref:
+    branch: main
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ecommerce-services
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./apps/base" # Location of kustomization.yaml for services
+  prune: true # Garbage collection enabled
+  sourceRef:
+    kind: GitRepository
+    name: ecommerce-repo
+  targetNamespace: ecommerce # Deploy to this namespace
