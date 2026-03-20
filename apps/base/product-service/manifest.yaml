@@ -23,13 +23,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
-              memory: "256Mi"
           envFrom:
             - configMapRef:
                 name: ecommerce-shared-config
