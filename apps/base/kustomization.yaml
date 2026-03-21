@@ -9,4 +9,5 @@ resources:
   - order-service
   - api-gateway
   - init-db
+  - ingress
 

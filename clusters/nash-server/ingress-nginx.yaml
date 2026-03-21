@@ -1,0 +1,37 @@
+# 1. NGINX Ingress Repository
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: ingress-nginx
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://kubernetes.github.io/ingress-nginx
+---
+# 2. Flux Installation Command
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: ingress-nginx
+      version: "4.x.x" # Use stable version 4.x.x
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: flux-system
+  targetNamespace: ingress-nginx
+  install:
+    createNamespace: true
+  # 3. Special configuration for Bare-metal server
+  values:
+    controller:
+      hostPort:
+        enabled: true # Open ports 80 and 443 directly on the Node IP
+      service:
+        type: NodePort
+      watchIngressWithoutClass: true
