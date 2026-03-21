@@ -1,5 +1,5 @@
 # 1. NGINX Ingress Repository
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: ingress-nginx
@@ -19,7 +19,7 @@ spec:
   chart:
     spec:
       chart: ingress-nginx
-      version: "4.x.x" # Use stable version 4.x.x
+      version: "4.12.1" # Pin to a stable release
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
@@ -30,6 +30,8 @@ spec:
   # 3. Special configuration for Bare-metal server
   values:
     controller:
+      admissionWebhooks:
+        enabled: false
       hostPort:
         enabled: true # Open ports 80 and 443 directly on the Node IP
       service:
