@@ -32,8 +32,6 @@ spec:
     controller:
       admissionWebhooks:
         enabled: false
-      hostPort:
-        enabled: true # Open ports 80 and 443 directly on the Node IP
       service:
         type: NodePort
       watchIngressWithoutClass: true
