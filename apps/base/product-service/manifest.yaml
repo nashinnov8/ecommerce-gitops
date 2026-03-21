@@ -19,7 +19,7 @@ spec:
           command: ['sh', '-c', 'until nc -z -w 2 mysql 3306; do echo "Waiting for mysql..."; sleep 2; done;']
       containers:
         - name: product-service
-          image: nguyenle1002/product-service:dev
+          image: nguyenle1002/product-service:1146dd4
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
